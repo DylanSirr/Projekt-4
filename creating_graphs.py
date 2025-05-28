@@ -10,18 +10,17 @@ def generate_hamiltonian_cycle(n):
         edges.add(tuple(sorted((a,b))))
     return edges
 
-def make_even(edges, n):
-    deg = [0]*n 
-
+def make_even_degrees(edges, n):
+    deg = [0]*n
     for a,b in edges:
         deg[a] += 1
         deg[b] += 1
-    
+
     odd = [i for i, d in enumerate(deg) if d % 2 == 1]
 
     while len(odd) >= 3:
         a,b,c = odd[:3]
-        edges.add(tuple(sorted((a,b))))  
+        edges.add(tuple(sorted((a,b))))
         edges.add(tuple(sorted((b,c))))
         edges.add(tuple(sorted((c,a))))
         odd = odd[3:]
@@ -39,8 +38,7 @@ def generate_graph(n, saturation):
         a,b = random.sample(range(n), 2)
         edges.add(tuple(sorted((a,b))))
 
-    make_even(edges, n)
-
+    make_even_degrees(edges, n)
     return edges
 
 def generate_non_hamiltonian_graph(n, saturation=50):
@@ -53,6 +51,4 @@ def generate_non_hamiltonian_graph(n, saturation=50):
         edges.add(tuple(sorted((a,b))))
 
     edges = {e for e in edges if 0 not in e}
-
     return edges
-
