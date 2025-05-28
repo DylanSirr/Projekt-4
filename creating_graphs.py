@@ -43,3 +43,16 @@ def generate_graph(n, saturation):
 
     return edges
 
+def generate_non_hamiltonian_graph(n, saturation=50):
+    max_edges = n * (n - 1) // 2
+    target_edges = int((saturation / 100) * max_edges)
+    edges = set()
+
+    while len(edges) < target_edges:
+        a,b = random.sample(range(n), 2)
+        edges.add(tuple(sorted((a,b))))
+
+    edges = {e for e in edges if 0 not in e}
+
+    return edges
+
