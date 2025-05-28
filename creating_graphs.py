@@ -25,3 +25,21 @@ def make_even(edges, n):
         edges.add(tuple(sorted((b,c))))
         edges.add(tuple(sorted((c,a))))
         odd = odd[3:]
+
+def generate_graph(n, saturation):
+    max_edges = n * (n - 1) // 2
+    target_edges = int((saturation / 100) * max_edges)
+
+    if target_edges < n:
+        raise ValueError("Podane nasycenie jest za małe, aby graf był spójny")
+
+    edges = generate_hamiltonian_cycle(n)
+
+    while len(edges) < target_edges:
+        a,b = random.sample(range(n), 2)
+        edges.add(tuple(sorted((a,b))))
+
+    make_even(edges, n)
+
+    return edges
+
